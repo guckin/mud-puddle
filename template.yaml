@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  serverless-web-bot
+  
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 10
+
+Resources:
+  BotFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      ImageUri: ECR URL
+      ImageConfig:
+        Command: [ "lambda.handler" ]
+    Metadata:
+      DockerTag: nodejs14.x-v1
+      DockerContext: .
+      Dockerfile: Dockerfile
+
+Outputs:
+  BotFnArn:
+    Description: "Bot function arn"
+    Value: !GetAtt BotFn.Arn
+  BotFnIamRole:
+    Description: "Implicit IAM Role created"
+    Value: !GetAtt BotFn.Arn
