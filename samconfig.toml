@@ -6,7 +6,6 @@ stack_name = "mud-puddle"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-6ge24nirg7k8"
 s3_prefix = "mud-puddle"
 region = "us-west-2"
-profile = "personal"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 image_repositories = ["FindNewsPagesFn=084882962555.dkr.ecr.us-west-2.amazonaws.com/mudpuddle0949f628/findnewspagesfn59eefb87repo"]
