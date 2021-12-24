@@ -16,6 +16,7 @@ Resources:
       ImageUri: ECR URL
       ImageConfig:
         Command: [ "lambda.handler" ]
+      MemorySize: 10240
     Metadata:
       DockerTag: nodejs14.x-v1
       DockerContext: .
