@@ -4,6 +4,7 @@ import {UnaryAsyncFn} from './utility';
 export type Driver = {
     readonly goTo: UnaryAsyncFn<string, void>;
     readonly getUrl: UnaryAsyncFn<void, string>;
+    readonly getText: UnaryAsyncFn<ElementQuery, string>;
 };
 
 export type NarrowedWebDriver = Pick<WebDriver, 'get' | 'getCurrentUrl' | 'findElement'>;
@@ -27,6 +28,7 @@ export type ElementQuery = {
     selector: CssSelector
 };
 
+//TODO: Narrow this type down
 export type CssSelector = string;
 
 const queryToLocator = ({selector}: ElementQuery): Locator => By.css(selector);
