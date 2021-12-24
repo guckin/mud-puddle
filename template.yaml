@@ -9,7 +9,7 @@ Globals:
     Timeout: 10
 
 Resources:
-  BotFn:
+  FindNewsPagesFn:
     Type: AWS::Serverless::Function
     Properties:
       PackageType: Image
@@ -20,11 +20,3 @@ Resources:
       DockerTag: nodejs14.x-v1
       DockerContext: .
       Dockerfile: Dockerfile
-
-Outputs:
-  BotFnArn:
-    Description: "Bot function arn"
-    Value: !GetAtt BotFn.Arn
-  BotFnIamRole:
-    Description: "Implicit IAM Role created"
-    Value: !GetAtt BotFn.Arn

@@ -15,6 +15,8 @@ RUN npm ci --verbose
 
 COPY . .
 
+RUN yum remove xz tar unzip bzip2 -y
+
 RUN npm run build
 
 FROM build AS test
