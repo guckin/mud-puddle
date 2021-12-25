@@ -11,6 +11,7 @@
   "author": "Stephen McGuckin",
   "license": "ISC",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.88",
     "@types/jest": "^27.0.3",
     "@types/selenium-webdriver": "^4.0.16",
     "jest": "^27.4.5",

@@ -12,7 +12,7 @@ Resources:
       ImageConfig:
         Command: [ "lambda.getTopUrls" ]
       MemorySize: 512
-      Timeout: 30
+      Timeout: 60
     Metadata:
       DockerTag: nodejs14.x-v1
       DockerContext: .
@@ -26,7 +26,7 @@ Resources:
       ImageConfig:
         Command: [ "lambda.getAllRawText" ]
       MemorySize: 512
-      Timeout: 30
+      Timeout: 60
     Metadata:
       DockerTag: nodejs14.x-v1
       DockerContext: .
