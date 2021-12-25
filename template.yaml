@@ -76,6 +76,7 @@ Resources:
             Next: Get All Articles
           Get All Articles:
             Type: Map
+            InputPath: $.Payload
             End: true
             Iterator:
               StartAt: Get Article
