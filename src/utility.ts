@@ -7,3 +7,7 @@ export const log = (value: unknown) => {
     const inspected = inspect(value, { depth: null })
     console.log(inspected);
 }
+
+export const assertNever = (value: never) => {
+    throw new Error(`Unexpected value: ${value}`);
+};

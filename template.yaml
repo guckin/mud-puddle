@@ -2,22 +2,99 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   serverless-web-bot
-  
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
-Globals:
-  Function:
-    Timeout: 60
 
 Resources:
-  FindNewsPagesFn:
+  FindArticlesFn:
     Type: AWS::Serverless::Function
     Properties:
       PackageType: Image
       ImageUri: ECR URL
       ImageConfig:
-        Command: [ "lambda.handler" ]
+        Command: [ "lambda.getTopUrls" ]
       MemorySize: 512
+      Timeout: 30
     Metadata:
       DockerTag: nodejs14.x-v1
       DockerContext: .
       Dockerfile: Dockerfile
+
+  GetArticleTextFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      ImageUri: ECR URL
+      ImageConfig:
+        Command: [ "lambda.getAllRawText" ]
+      MemorySize: 512
+      Timeout: 30
+    Metadata:
+      DockerTag: nodejs14.x-v1
+      DockerContext: .
+      Dockerfile: Dockerfile
+
+  CollectArticleDataStepsRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: !Sub 'states.${AWS::Region}.amazonaws.com'
+            Action: 'sts:AssumeRole'
+      Policies:
+        - PolicyName: lambda
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action: 'lambda:InvokeFunction'
+                Resource:
+                  - !GetAtt 'FindArticlesFn.Arn'
+                  - !GetAtt 'GetArticleTextFn.Arn'
+
+  CollectArticleDataSteps:
+    Type: AWS::Serverless::StateMachine
+    Properties:
+      Role: !GetAtt 'CollectArticleDataStepsRole.Arn'
+      Definition:
+        StartAt: Find Articles
+        States:
+          Find Articles:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke
+            Parameters:
+              Payload.$: $
+              FunctionName: ${FindArticlesFn.Arn}
+            Retry:
+              - ErrorEquals:
+                  - Lambda.ServiceException
+                  - Lambda.AWSLambdaException
+                  - Lambda.SdkClientException
+                IntervalSeconds: 2
+                MaxAttempts: 3
+                BackoffRate: 5
+            Next: Get All Articles
+          Get All Articles:
+            Type: Map
+            End: true
+            Iterator:
+              StartAt: Get Article
+              States:
+                Get Article:
+                  Type: Task
+                  Resource: arn:aws:states:::lambda:invoke
+                  FunctionName: ${GetArticleTextFn.Arn}
+                  OutputPath: $
+                  Parameters:
+                    Payload.$: $
+                  Retry:
+                    - ErrorEquals:
+                        - Lambda.ServiceException
+                        - Lambda.AWSLambdaException
+                        - Lambda.SdkClientException
+                      IntervalSeconds: 2
+                      MaxAttempts: 3
+                      BackoffRate: 5
+                  End: true
+            MaxConcurrency: 10
+        TimeoutSeconds: 120

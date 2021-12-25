@@ -8,4 +8,7 @@ s3_prefix = "mud-puddle"
 region = "us-west-2"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
-image_repositories = ["FindNewsPagesFn=084882962555.dkr.ecr.us-west-2.amazonaws.com/mudpuddle0949f628/findnewspagesfn59eefb87repo"]
+image_repositories = [
+  "FindArticlesFn=084882962555.dkr.ecr.us-west-2.amazonaws.com/mudpuddle0949f628/findarticlesfn98414849repo",
+  "GetArticleTextFn=084882962555.dkr.ecr.us-west-2.amazonaws.com/mudpuddle0949f628/getarticletextfn6225eb9drepo"
+]
