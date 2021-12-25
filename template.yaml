@@ -83,10 +83,10 @@ Resources:
                 Get Article:
                   Type: Task
                   Resource: arn:aws:states:::lambda:invoke
-                  FunctionName: ${GetArticleTextFn.Arn}
                   OutputPath: $
                   Parameters:
                     Payload.$: $
+                    FunctionName: ${GetArticleTextFn.Arn}
                   Retry:
                     - ErrorEquals:
                         - Lambda.ServiceException
