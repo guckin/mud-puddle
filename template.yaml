@@ -64,7 +64,7 @@ Resources:
             Resource: arn:aws:states:::lambda:invoke
             Parameters:
               Payload.$: $
-              FunctionName: ${FindArticlesFn.Arn}
+              FunctionName: !GetAtt 'FindArticlesFn.Arn'
             Retry:
               - ErrorEquals:
                   - Lambda.ServiceException
@@ -86,7 +86,7 @@ Resources:
                   OutputPath: $
                   Parameters:
                     Payload.$: $
-                    FunctionName: ${GetArticleTextFn.Arn}
+                    FunctionName: !GetAtt 'GetArticleTextFn.Arn'
                   Retry:
                     - ErrorEquals:
                         - Lambda.ServiceException
