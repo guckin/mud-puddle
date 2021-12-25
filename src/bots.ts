@@ -1,5 +1,5 @@
 import {Driver, ElementQuery} from './driver';
-import {UnaryAsyncFn} from './utility';
+import {UnaryAsyncFn} from './functional';
 
 export const aggregateUrls = (getDriver: UnaryAsyncFn<void, Driver>) => async (): Promise<readonly string[]> => {
     const {goTo, getLinks} = await getDriver();

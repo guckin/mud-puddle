@@ -1,7 +1,9 @@
 import {SeleniumDriver} from './driver';
 import {aggregateUrls, getAllText} from './bots';
 import {Handler} from 'aws-lambda';
-import {compose, log, tap} from './utility';
+import {compose} from './functional';
+import {log} from './logger';
+import {tap} from './promise';
 
 export const getTopUrls: Handler<void, readonly string[]> = compose(
     log,

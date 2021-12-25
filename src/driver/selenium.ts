@@ -1,7 +1,7 @@
 import {Builder, By, Locator, WebDriver} from 'selenium-webdriver';
 import {ByCss, ByTag, Driver, ElementQuery} from './index';
 import {Options, ServiceBuilder, setDefaultService} from 'selenium-webdriver/chrome';
-import {assertNever} from '../utility';
+import {assertNever} from '../assert-never';
 
 export type NarrowedWebDriver = Pick<WebDriver, 'get' | 'getCurrentUrl' | 'findElement' | 'findElements'>;
 

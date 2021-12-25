@@ -1,4 +1,4 @@
-import {UnaryAsyncFn} from '../utility';
+import {UnaryAsyncFn} from '../functional';
 
 export type Driver = {
     readonly goTo: UnaryAsyncFn<string, void>;
